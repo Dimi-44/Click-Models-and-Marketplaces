@@ -1,5 +1,7 @@
 # The data remember the recommender
 
+[![reproduce](https://github.com/Dimi-44/Click-Models-and-Marketplaces/actions/workflows/reproduce.yml/badge.svg)](https://github.com/Dimi-44/Click-Models-and-Marketplaces/actions/workflows/reproduce.yml)
+
 **Do click models survive a change of recommendation policy?** A study of cross-policy generalisation on 13.7 million marketplace impressions.
 
 *Course project, Statistical and Machine Learning, MSc in Quantitative Finance, WU Vienna (2026) · Dimitris Ntallas & Orest Mykhailiuk*
@@ -128,6 +130,16 @@ python analysis/naive_encoding_bootstrap.py
 for f in fig_eda fig_results fig_curve fig_tuning make_numbers; do python analysis/$f.py; done
 cd presentation && pdflatex main.tex && pdflatex main.tex
 ```
+
+On every push, a [GitHub Actions workflow](.github/workflows/reproduce.yml) does the following on Python 3.11 to 3.13:
+
+- runs the unit tests
+- unpacks the data and checks it against the recorded checksums
+- re-runs the exploratory analysis
+- regenerates the slide numbers and checks they match the committed versions exactly
+- renders the figures
+
+The full model tuning is not part of this check, because it takes about an hour.
 
 All result tables and headline numbers on the slides are generated from `results/` by `analysis/make_numbers.py`. A few descriptive figures in the slide text, such as split sizes and grid ranges, were written in by hand.
 

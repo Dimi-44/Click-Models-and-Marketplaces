@@ -1,0 +1,45 @@
+name: reproduce
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Unit tests
+        run: PYTHONPATH=src python -m unittest discover -s tests -v
+
+      - name: Compile all scripts
+        run: python -m compileall -q analysis src
+
+      - name: Unpack data and rebuild the split (SHA256-checked)
+        run: python analysis/unpack_data.py
+
+      - name: Re-run exploratory analysis
+        run: python analysis/eda.py
+
+      - name: Regenerate slide numbers and tables
+        run: python analysis/make_numbers.py
+
+      - name: Check results and slide numbers match the committed versions
+        run: git diff --exit-code results/ presentation/numbers.tex presentation/tab_*.tex
+
+      - name: Render figures (smoke test)
+        run: for f in fig_eda fig_results fig_curve fig_tuning; do python analysis/$f.py; done
