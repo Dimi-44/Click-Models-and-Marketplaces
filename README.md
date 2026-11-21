@@ -2,7 +2,8 @@
 
 **Do click models survive a change of recommendation policy?** A study of cross-policy generalisation on 13.7 million marketplace impressions.
 
-*Course project, Statistical and Machine Learning, WU Vienna (2026) · Dimitris Ntallas & Orest Mykhailiuk*
+*Course project, Statistical and Machine Learning, MSc in Quantitative Finance, WU Vienna (2026) · Dimitris Ntallas & Orest Mykhailiuk*
+
 
 ## Motivation: why marketplaces?
 
