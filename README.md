@@ -4,6 +4,8 @@
 
 *Course project, Statistical and Machine Learning, MSc in Quantitative Finance, WU Vienna (2026) · Dimitris Ntallas & Orest Mykhailiuk*
 
+<p align="center"><img src="docs/img/res_gains.png" width="780"></p>
+<p align="center"><sub>Each model's gain over a constant click-rate baseline (95% intervals). Trained on the adaptive BTS policy, the random forest wins clearly on BTS's own test data (left); under the Random policy (right) the ranking is not confirmed, and a plain item × position click-rate table (dashed line) does about as well as any model.</sub></p>
 
 ## Motivation: why marketplaces?
 
@@ -19,7 +21,7 @@ So a start-up is tempted to do the cheap thing: train a model on the logs of its
 
 ### What this means for a start-up
 
-- **Keep a small randomised slice of traffic.** It is cheap insurance: it gives an honest test set for whatever policy comes next. In our data, the model that looked best on the old logs lost to the simplest one under the new policy.
+- **Keep a small randomised slice of traffic, and log its propensities.** It is cheap insurance: it provides data that no ranking algorithm has filtered, so click models can be checked outside the conditions they were trained in. Evaluating a specific new policy on it is a further step that needs off-policy estimators and enough coverage of the actions that policy would take. In our data, the model that looked best on the old logs (random forest with user features) lost to context-free ridge regression on item and position under the new policy: −1.2 × 10⁻⁴ log loss, 95% CI [−1.8, −0.6].
 - **Prefer simple, transferable signals until contextual gains are validated.** Item-level effects carried over to the new policy; gains from user features did not.
 - **More data from the old algorithm is not a substitute for data from the new one.** It improved every model, but it did not preserve the flexible models' advantage.
 - **Audit your categorical data across sources.** One relabelled user segment created a large artificial effect in our first pass.
@@ -45,9 +47,7 @@ We train only on BTS and treat Random as "the future after the switch".
 
 <p align="center"><img src="docs/img/eda_ctr_decomposition.png" width="420"></p>
 
-**2. Flexible models win on BTS, but not after the switch.** All three models beat a constant click-rate baseline on both logs. On BTS the random forest gains twice as much as ridge regression. On Random the ranking is no longer confirmed, and a simple item × position click-rate table does as well as any model.
-
-<p align="center"><img src="docs/img/res_gains.png" width="760"></p>
+**2. Flexible models win on BTS, but not after the switch.** All three models beat a constant click-rate baseline on both logs. On BTS the random forest gains twice as much as ridge regression. On Random the ranking is no longer confirmed, and a simple item × position click-rate table does about as well as any model: the forest's difference from it is −0.5 × 10⁻⁴, 95% CI [−1.1, +0.2]. See the figure at the top.
 
 **3. The extra signal came from user features, and it did not carry over.** Adding the four user features is what gives the trees most of their BTS advantage. On Random, the same features make every model slightly worse.
 
@@ -122,13 +122,14 @@ python analysis/evaluate_final.py 0.1 3e-6    # refit the selected forest with 3
 python analysis/final_model.py                # calibration, importance, extra contrasts
 python analysis/curve.py                      # learning curves, re-tuned at every size
 python analysis/naive_encoding_refit.py       # first-pass encoding diagnosis
+python analysis/naive_encoding_bootstrap.py
 
 # 3. Figures, numbers and slides
 for f in fig_eda fig_results fig_curve fig_tuning make_numbers; do python analysis/$f.py; done
 cd presentation && pdflatex main.tex && pdflatex main.tex
 ```
 
-Every number on the slides is generated from `results/` by `analysis/make_numbers.py`; none is typed by hand.
+All result tables and headline numbers on the slides are generated from `results/` by `analysis/make_numbers.py`. A few descriptive figures in the slide text, such as split sizes and grid ranges, were written in by hand.
 
 To start from the original raw CSV files instead, download the full dataset (see [`data/README.md`](data/README.md)) and run `marketplace_ml.pilot` followed by `marketplace_ml.prepare_full` (seed 20261114). This produces the same arrays.
 
@@ -149,7 +150,7 @@ To start from the original raw CSV files instead, download the full dataset (see
 
 ## Authors
 
-Dimitris Ntallas and Orest Mykhailiuk, Statistical and Machine Learning, WU Vienna (2026).
+Dimitris Ntallas and Orest Mykhailiuk, Statistical and Machine Learning, MSc in Quantitative Finance, WU Vienna (2026).
 
 ## License
 

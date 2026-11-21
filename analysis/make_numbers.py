@@ -6,7 +6,7 @@ O = OUT; D = DECK
 e = json.load(open(O + 'eda.json')); M = pd.read_csv(O + 'metrics.csv'); B = pd.read_csv(O + 'bootstrap.csv')
 X = pd.read_csv(O + 'bootstrap_extra.csv'); sel = {(r['method'], r['features']): r for r in json.load(open(O + 'selected.json'))}
 cal = pd.read_csv(O + 'calibration.csv'); imp = pd.read_csv(O + 'importance.csv'); co = json.load(open(O + 'ridge_m1_coef.json'))
-cur = pd.read_csv(O + 'learning_curve.csv')
+cur = pd.read_csv(O + 'learning_curve.csv'); G = pd.read_csv(O + 'tuning_grid.csv')
 ll = M.set_index(['method', 'features', 'set'])
 mac = {}
 def m(name, val): mac[name] = val
@@ -16,7 +16,7 @@ def boot(contrast, s):
 def ci(lo, hi): return f'{sg(lo)}, {sg(hi)}'
 
 # data / EDA
-m('btsN', '12.36m'); m('rndN', '1.37m')
+m('btsN', f"{e['BTS']['n']/1e6:.2f}m"); m('rndN', f"{e['Random']['n']/1e6:.2f}m")
 m('btsClicks', f"{e['BTS']['clicks']:,}".replace(',', '{,}')); m('rndClicks', f"{e['Random']['clicks']:,}".replace(',', '{,}'))
 m('btsCTR', f"{e['BTS']['ctr']*100:.3f}"); m('rndCTR', f"{e['Random']['ctr']*100:.3f}")
 m('btsTopTen', f"{e['BTS']['top10_share']*100:.0f}"); m('rndTopTen', f"{e['Random']['top10_share']*100:.0f}")
@@ -28,9 +28,11 @@ m('profCTRR', f"{e['Random']['profile_ctr']*100:.2f}")
 m('btsTestCTR', f"{ll.loc[('B0','item+pos','BTS_test')].ctr*100:.3f}")
 # naive encoding (refit of the original pipeline, see refit_results.json / boot.py)
 naive = json.load(open(OUT + 'naive_encoding.json'))[1]
-m('naivePred', f"{naive['pred_unk_asis']*100:.1f}"); m('naiveDiff', sg(-29.93, 1))
+nb = {r['set']: r for r in json.load(open(OUT + 'naive_encoding_bootstrap.json'))}
+naive_diff = nb['Random_naive']['m1_minus_m2_x1e4']
+m('naivePred', f"{naive['pred_unk_asis']*100:.1f}"); m('naiveDiff', sg(naive_diff, 1))
 ridgeR = boot('context_gain_Logit', 'Random')[0]
-m('naiveRatio', f"{29.93/abs(ridgeR):.0f}")
+m('naiveRatio', f"{abs(naive_diff)/abs(ridgeR):.0f}")
 m('ctxRidgeR', sg(ridgeR, 2))
 seenX = X[X.set == 'Random_seen'].set_index('A')
 m('ctxRidgeSeen', sg(seenX.loc['Logit/item+pos']['diff'], 2))
@@ -39,8 +41,10 @@ m('ridgeC', f"{sel[('Logit','full')]['selected']['C']:g}")
 m('cartLeaves', f"{sel[('CART','full')]['selected']['leaves']:,}".replace(',', '{,}'))
 fs = sel[('Forest', 'full')]['selected']
 m('forestB', str(fs['B'])); m('forestMf', f"{fs['max_features']*100:.0f}")
-m('forestLeafText', f"min.\\ leaf \\(\\approx\\){fs['min_leaf_frac']*8657823:.0f} impressions")
-m('forestGrid', '21')
+n_train = json.load(open(OUT + 'prepare_manifest.json'))['complete_train_pool']
+m('forestLeafText', f"min.\\ leaf \\(\\approx\\){fs['min_leaf_frac']*n_train:.0f} impressions")
+fg = pd.concat([G[(G.method == 'Forest') & (G.features == 'full')], pd.read_csv(OUT + 'forest_ext.csv'), pd.read_csv(OUT + 'forest_ext2.csv')])
+m('forestGrid', str(len(fg.drop_duplicates(['max_features', 'min_leaf_frac']))))
 # result 1
 for s, k in [('BTS_test', 'BTS'), ('Random', 'RND')]:
     d, lo, hi = boot('logit_minus_forest', s); m(f'fmr{k}', sg(d)); m(f'fmr{k}ci', ci(lo, hi))
@@ -120,9 +124,10 @@ for meth in ['Logit', 'CART', 'Forest']:
         a, b = ll.loc[(meth, 'item+pos', s)].log_loss, ll.loc[(meth, 'full', s)].log_loss
         r += [f'{a*1e4:.2f}', f'{b*1e4:.2f}', sg((a-b)*1e4, 2)]
     rows.append(' & '.join(r) + ' \\\\')
-nseen = int((ll.loc[('B0','item+pos','Random_seen')].auc*0) + 888334)
+n_prof = round(e['Random']['n'] * e['Random']['profile_share']); n_seen = e['Random']['n'] - n_prof
+fmt = lambda x: f'{x:,}'.replace(',', '{,}')
 t = ['\\begin{tabular}{@{}lrrr@{\\hspace{.6cm}}rrr@{}}\\toprule',
-     ' & \\multicolumn{3}{c}{Matched-code rows (888{,}334)} & \\multicolumn{3}{c}{Relabelled segment (485{,}993)}\\\\',
+     f' & \\multicolumn{{3}}{{c}}{{Matched-code rows ({fmt(n_seen)})}} & \\multicolumn{{3}}{{c}}{{Relabelled segment ({fmt(n_prof)})}}\\\\',
      'Log loss \\(\\times10^{4}\\) & item+pos & + user & gain & item+pos & + user & gain\\\\\\midrule'] + rows + \
     ['\\bottomrule\\end{tabular}\\par\\vspace{.15cm}', f'{{\\footnotesize\\color{{muted}} Context-gain 95\\% CIs on matched rows: ridge [{sg(seenX.loc["Logit/item+pos"].lo,2)}, {sg(seenX.loc["Logit/item+pos"].hi,2)}], CART [{sg(seenX.loc["CART/item+pos"].lo,2)}, {sg(seenX.loc["CART/item+pos"].hi,2)}], forest [{sg(seenX.loc["Forest/item+pos"].lo,2)}, {sg(seenX.loc["Forest/item+pos"].hi,2)}].}}']
 open(D + 'tab_subgroups.tex', 'w').write('\n'.join(t))

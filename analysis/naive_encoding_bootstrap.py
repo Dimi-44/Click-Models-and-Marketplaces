@@ -1,7 +1,7 @@
 """Minute-block bootstrap of the ridge context contrast under naive vs harmonised encoding."""
 import sys, json, zipfile, numpy as np, pandas as pd
 import os; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from config import PREPARED, REPO
+from config import PREPARED, REPO, OUT
 sys.path.insert(0, str(REPO / 'src'))
 from marketplace_ml.full_encoding import CompactSparseEncoder, CONTEXTUAL, ITEM_POSITION
 from sklearn.linear_model import LogisticRegression
@@ -26,8 +26,7 @@ def boot(rows,label):
         i=rng.integers(0,len(ub),len(ub)); draws.append(S[i].sum()/N[i].sum())
     lo,hi=np.percentile(draws,[2.5,97.5])
     print(f'{label}: M1-M2 = {d.mean()*1e4:+.2f} x1e-4  95% CI [{lo*1e4:+.2f}, {hi*1e4:+.2f}]',flush=True)
+    return {'set': label, 'm1_minus_m2_x1e4': d.mean()*1e4, 'lo': lo*1e4, 'hi': hi*1e4}
 unk=rnd['user_feature_0']==65535
-boot(te,'BTS test')
-boot(rnd,'Random as-is (your method)')
-boot(remap,'Random, profile remapped')
-boot(rnd[~unk],'Random, seen-code rows only')
+res=[boot(te,'BTS_test'), boot(rnd,'Random_naive'), boot(remap,'Random_remapped'), boot(rnd[~unk],'Random_seen')]
+json.dump(res, open(OUT + 'naive_encoding_bootstrap.json', 'w'), indent=1)
