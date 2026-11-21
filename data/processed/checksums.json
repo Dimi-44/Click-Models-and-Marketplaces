@@ -1,0 +1,8 @@
+{
+ "bts_compact": "88e62b8f25470404a2b38ba355f16f4dc9673f32d1e8f68c736bc5b8c6df2eeb",
+ "random_compact": "583d9d14d0ff0d5fad39625b2721fcb066931c8424aa6ec25b4a7e95951bccb9",
+ "indices_train": "b7d098860ea194a460ed02bb1ecddca35ddd364e51342a290ec8671d1c62c717",
+ "indices_validation": "a5afaad1be3e1a6849cb01af3f624de5bbc36785d7a75a67a9c2f7b55ce21834",
+ "indices_internal_test": "af8c64876315533d5a2a5a35084f1602968aca2a773614c53456260c01569424",
+ "train_order_minute_rep0": "3f060aa7287c3da61025c2b2f7533d0dd567c4affd6db5b383425177bd558f2b"
+}

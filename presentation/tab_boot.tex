@@ -1,0 +1,15 @@
+\begin{tabular}{@{}lrlrl@{}}\toprule
+Contrast (A \(-\) B) & \multicolumn{2}{c}{\color{bts}\textbf{BTS test}} & \multicolumn{2}{c}{\color{rnd}\textbf{Random}}\\\midrule
+Constant \(-\) Ridge logistic (+ user) & +2.92 & [+2.49, +3.36] & +4.29 & [+3.58, +5.01] \\
+Constant \(-\) CART (pruned) (+ user) & +5.37 & [+4.67, +6.04] & +3.91 & [+3.03, +4.81] \\
+Constant \(-\) Random forest (+ user) & +6.06 & [+5.47, +6.63] & +3.71 & [+2.92, +4.57] \\
+\midrule
+Ridge \(-\) Forest (both + user) & +3.13 & [+2.55, +3.74] & \(-\)0.58 & [\(-\)1.28, +0.12] \\
+Ridge \(-\) CART (both + user) & +2.45 & [+1.81, +3.11] & \(-\)0.38 & [\(-\)1.05, +0.24] \\
+CART \(-\) Forest (both + user) & +0.69 & [+0.33, +1.10] & \(-\)0.20 & [\(-\)0.82, +0.45] \\
+Ridge item+pos \(-\) Forest + user (final) & +4.71 & [+4.13, +5.28] & \(-\)1.20 & [\(-\)1.80, \(-\)0.58] \\
+\midrule
+Ridge logistic: item+pos \(-\) + user & +1.58 & [+1.27, +1.85] & \(-\)0.61 & [\(-\)0.95, \(-\)0.26] \\
+CART (pruned): item+pos \(-\) + user & +4.02 & [+3.34, +4.68] & \(-\)0.37 & [\(-\)1.03, +0.33] \\
+Random forest: item+pos \(-\) + user & +4.65 & [+4.07, +5.22] & \(-\)0.95 & [\(-\)1.56, \(-\)0.34] \\
+\bottomrule\end{tabular}

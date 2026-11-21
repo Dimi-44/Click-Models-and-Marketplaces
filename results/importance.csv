@@ -1,0 +1,19 @@
+model,set,group,increase_x1e4
+Forest,BTS_test,item,9.418270350936876
+Forest,BTS_test,position,1.9281698099584201
+Forest,BTS_test,user profile,10.478883971016089
+Forest,Random,item,7.4986990130344875
+Forest,Random,position,0.04100555092211716
+Forest,Random,user profile,4.365865291798936
+Logit,BTS_test,item,2.8284790883848636
+Logit,BTS_test,position,-0.01232838124247404
+Logit,BTS_test,user profile,3.668174075828687
+Logit,Random,item,5.1308681101383184
+Logit,Random,position,0.0002947928621349627
+Logit,Random,user profile,0.5561289265374956
+CART,BTS_test,item,10.073432124593182
+CART,BTS_test,position,1.4826541397730888
+CART,BTS_test,user profile,10.784127901309441
+CART,Random,item,9.472080091661415
+CART,Random,position,-0.32591507600158304
+CART,Random,user profile,4.687259062306145

@@ -1,0 +1,41 @@
+{
+  "user_feature_0": {
+    "4ae385d792f81dde128124a925a830de": 3,
+    "81ce123cbb5bd8ce818f60fb3586bba5": 1,
+    "8ca3f3c62ebdd4b5e311d475c6d5ca2f": 0,
+    "cef3390ed299c09874189c387777674a": 2
+  },
+  "user_feature_1": {
+    "03a5648a76832f83c859d46bc06cb64a": 1,
+    "2d03db5543b14483e52d761760686b64": 2,
+    "6ff54aa8ff7a9dde75161c20a3ee4231": 4,
+    "8b50621825ffd909dd8d8317d366271f": 5,
+    "e07fc4436e7c7833115dbfc8ff770109": 0,
+    "f1c2d6a32ec39249160cf784b63f4c6f": 3
+  },
+  "user_feature_2": {
+    "1e58eb4fb1a017cf89826db60ffb7d67": 0,
+    "2723d2eb8bba04e0362098011fa3997b": 4,
+    "302deff13f835d731df1c842eed95971": 5,
+    "719dab53a7560218a9d1f96b25d6fa32": 1,
+    "77fecf8cfc9c3057ced84bd867c0800c": 10,
+    "7ae37150e596e6e8f19e27a06bd4d359": 8,
+    "7bc94a2da491829b777c49c4b5e480f2": 3,
+    "9b2d331c329ceb74d3dcfb48d8798c78": 6,
+    "9f4e8271d3d3014af5f35124c2de5082": 7,
+    "c2e4f76cdbabecd33b8c762aeef386b3": 2,
+    "c7cce49040b6630e9b5484dfcc0e6cd1": 9
+  },
+  "user_feature_3": {
+    "05b76f5e97e51128862059ac7df9e42a": 4,
+    "06128286bcc64b6a4b0fb7bc0328fe17": 5,
+    "1f5491ca59138af653430c90c33319b5": 9,
+    "270b3e1c052b4f2e9c90bf0ebeb84f34": 6,
+    "3aef83d337306549f1f8ca5a8b8ecff8": 7,
+    "9bde591ffaab8d54c457448e4dca6f53": 2,
+    "c39b0c7dd5d4eb9a18e7db6ba2f258f8": 1,
+    "ec6cfbbf6c92863522964288cddad06c": 8,
+    "f97571b9c14a786aab269f0b427d2a85": 3,
+    "fe64471cf5b19278c62ce48447f9264d": 0
+  }
+}

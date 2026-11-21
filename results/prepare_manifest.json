@@ -1,0 +1,44 @@
+{
+  "source_archive_sha256": "ab082954506663f4136e15475f83164ee10cda5feea3cb36b5be5ee2104eb007",
+  "frozen_pilot_minute_manifest_sha256": "7d35778855463e1b8abf7402e1a41bb7126343fae3e1290f3512dbc341ce07ce",
+  "frozen_copy_minute_manifest_sha256": "7d35778855463e1b8abf7402e1a41bb7126343fae3e1290f3512dbc341ce07ce",
+  "split_seed": 20261114,
+  "subset_seed_formula": "20261114 + 10000 + repetition",
+  "train_sizes": [
+    100000,
+    300000,
+    1000000,
+    3000000,
+    8657823
+  ],
+  "three_repetitions_at": [
+    100000,
+    300000,
+    1000000
+  ],
+  "single_repetition_at": [
+    3000000,
+    8657823
+  ],
+  "subset_definition": "Exact prefix of independently seeded randomized calendar-minute-block orders; within-minute row shuffle; at most one partial terminal minute per size; nested within repetition; no outcome stratification",
+  "complete_train_pool": 8657823,
+  "membership_counts": {
+    "train": 8657823,
+    "validation": 1853309,
+    "internal_test": 1846068
+  },
+  "data_ingestion": {
+    "policy": "BTS",
+    "rows": 12357200,
+    "clicks": 61208,
+    "resumed": true
+  },
+  "bts_storage_level_counts": {
+    "user_feature_0": 4,
+    "user_feature_1": 6,
+    "user_feature_2": 11,
+    "user_feature_3": 10
+  },
+  "seconds": 1.7,
+  "random_opened": false
+}

@@ -1,0 +1,8 @@
+\begin{tabular}{@{}lrrr@{\hspace{.6cm}}rrr@{}}\toprule
+ & \multicolumn{3}{c}{Matched-code rows (888{,}334)} & \multicolumn{3}{c}{Relabelled segment (485{,}993)}\\
+Log loss \(\times10^{4}\) & item+pos & + user & gain & item+pos & + user & gain\\\midrule
+Ridge logistic & 216.61 & 217.63 & \(-\)1.02 & 250.85 & 250.72 & +0.13 \\
+CART (pruned) & 217.35 & 218.07 & \(-\)0.72 & 251.27 & 251.00 & +0.27 \\
+Random forest & 216.93 & 217.06 & \(-\)0.13 & 250.96 & 253.41 & \(-\)2.46 \\
+\bottomrule\end{tabular}\par\vspace{.15cm}
+{\footnotesize\color{muted} Context-gain 95\% CIs on matched rows: ridge [\(-\)1.59, \(-\)0.48], CART [\(-\)1.76, +0.31], forest [\(-\)0.93, +0.71].}

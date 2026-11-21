@@ -1,0 +1,13 @@
+\begin{tabular}{@{}llrrr@{\hspace{.6cm}}rrr@{}}\toprule
+ & & \multicolumn{3}{c}{\color{bts}\textbf{BTS test}} & \multicolumn{3}{c}{\color{rnd}\textbf{Random}}\\
+Model & Features & Log loss & AUC & Mean pred. & Log loss & AUC & Mean pred.\\
+ & & \(\times10^{4}\) & & \% & \(\times10^{4}\) & & \%\\\midrule
+Constant CTR &  & 317.28 & 0.500 & 0.495 & 233.62 & 0.500 & 0.495 \\
+Item\(\times\)position CTR &  & 315.89 & 0.557 & 0.498 & 229.45 & 0.591 & 0.374 \\
+Ridge logistic & item+pos & 315.94 & 0.556 & 0.494 & 228.72 & 0.607 & 0.349 \\
+Ridge logistic & + user & 314.36 & 0.597 & 0.494 & 229.33 & 0.608 & 0.348 \\
+CART (pruned) & item+pos & 315.93 & 0.557 & 0.494 & 229.34 & 0.595 & 0.355 \\
+CART (pruned) & + user & 311.91 & 0.619 & 0.484 & 229.71 & 0.622 & 0.338 \\
+Random forest & item+pos & 315.87 & 0.558 & 0.495 & 228.96 & 0.602 & 0.352 \\
+Random forest & + user & 311.22 & 0.624 & 0.493 & 229.91 & 0.610 & 0.366 \\
+\bottomrule\end{tabular}

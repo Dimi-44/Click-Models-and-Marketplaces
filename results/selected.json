@@ -1,0 +1,64 @@
+[
+ {
+  "method": "Logit",
+  "features": "item+pos",
+  "selected": {
+   "penalty": "l2",
+   "C": 1000
+  },
+  "val_log_loss": 0.030661162464079558
+ },
+ {
+  "method": "Logit",
+  "features": "full",
+  "selected": {
+   "penalty": "l2",
+   "C": 1000
+  },
+  "val_log_loss": 0.030504660136250184
+ },
+ {
+  "method": "CART",
+  "features": "item+pos",
+  "selected": {
+   "min_leaf_frac": 2e-06,
+   "ccp_alpha": 2.986645359241993e-09,
+   "m": 10.0,
+   "leaves": 67
+  },
+  "val_log_loss": 0.030663813687109027
+ },
+ {
+  "method": "CART",
+  "features": "full",
+  "selected": {
+   "min_leaf_frac": 2e-06,
+   "ccp_alpha": 7.544941036293304e-09,
+   "m": 100.0,
+   "leaves": 1557
+  },
+  "val_log_loss": 0.030318480139250155
+ },
+ {
+  "method": "Forest",
+  "features": "item+pos",
+  "selected": {
+   "max_features": 1.0,
+   "min_leaf_frac": 0.001,
+   "B": 300,
+   "mean_leaves": 154.2
+  },
+  "val_log_loss": 0.030665673215098534
+ },
+ {
+  "method": "Forest",
+  "features": "full",
+  "selected": {
+   "max_features": 0.1,
+   "min_leaf_frac": 3e-06,
+   "B": 300,
+   "mean_leaves": 6599.256666666667
+  },
+  "val_log_loss": 0.030228008520249202
+ }
+]

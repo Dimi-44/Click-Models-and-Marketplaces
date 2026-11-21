@@ -1,0 +1,24 @@
+# data: only the compressed processed data and its README are tracked
+data/raw/
+data/pilot/
+data/prepared/
+*.npy
+*.pkl
+*.zip
+
+# python
+__pycache__/
+*.pyc
+.venv/
+
+# LaTeX build files
+presentation/*.aux
+presentation/*.log
+presentation/*.nav
+presentation/*.out
+presentation/*.snm
+presentation/*.toc
+presentation/*.vrb
+presentation/main.pdf
+
+.DS_Store
